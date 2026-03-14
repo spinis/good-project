@@ -1,0 +1,16 @@
+---
+- name: "RHEL 10 Self-Healing Rulebook"
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+  rules:
+    - name: "Detect Nginx Down"
+      condition: event.payload.status == "down"
+      action:
+        run_job_template:
+          name: "RHEL10-Nginx-Restore"
+          organization: "Default"
+    
+
